@@ -27,13 +27,6 @@ let eduTechTextAlpha = 0; // 控制文字的透明度，從 0 (完全透明) 到
 let eduTechTextDisplayTime = 2000; // 文字完全顯示的時間（毫秒），設定為 2 秒
 let eduTechTextFadeSpeed = 5; // 文字淡出的速度，值越大淡出越快
 
-// --- 新增教育科技文字擺動與變色相關變數 ---
-let eduTechTextOffsetX = 0; // 控制文字左右擺動的偏移量
-let eduTechTextAngle = 0; // 控制文字擺動的模擬角度
-let eduTechTextMoveSpeed = 0.05; // 控制文字擺動的速度
-let colorPhase = 0; // 控制顏色變化的階段 (0: 藍色, 1: 綠色, 2: 紅色)
-
-
 function preload() {
   // 在 setup 之前載入 ml5.js 的 handPose 模型
   handPose = ml5.handPose(options);
@@ -133,23 +126,12 @@ function draw() {
 
   ---
 
-  ### **教育科技文字顯示、擺動與變色邏輯**
+  ### **教育科技文字顯示邏輯 (新增功能)**
 
   // 檢查是否達到 8 個水果並且文字尚未顯示
   if (caughtScore >= 8 && !showEduTechText) {
     showEduTechText = true; // 設定為顯示文字
     eduTechTextAlpha = 255; // 將透明度設定為完全不透明
-    eduTechTextAngle = 0; // 重置擺動角度，確保每次出現從中心開始擺動
-
-    // 根據分數範圍設定顏色階段
-    if (caughtScore >= 8 && caughtScore < 16) {
-      colorPhase = 0; // 藍色
-    } else if (caughtScore >= 16 && caughtScore < 24) {
-      colorPhase = 1; // 綠色
-    } else if (caughtScore >= 24) {
-      colorPhase = 2; // 紅色
-    }
-
     // 使用 setTimeout 在 `eduTechTextDisplayTime` 毫秒後執行淡出動畫
     setTimeout(() => {
       // 使用 setInterval 逐步減少文字透明度，實現淡出效果
@@ -166,27 +148,10 @@ function draw() {
 
   // 如果 `showEduTechText` 為 true，則繪製「教育科技」文字
   if (showEduTechText) {
-    // 計算左右擺動偏移量
-    eduTechTextAngle += eduTechTextMoveSpeed; // 增加角度
-    eduTechTextOffsetX = sin(eduTechTextAngle) * 50; // 使用 sin 函數產生左右擺動，幅度為 50 像素
-
-    let textColor;
-    // 根據 colorPhase 設定文字顏色
-    if (colorPhase === 0) {
-      textColor = color(66, 133, 244, eduTechTextAlpha); // 教育科技藍色
-    } else if (colorPhase === 1) {
-      textColor = color(34, 139, 34, eduTechTextAlpha); // 森林綠
-    } else if (colorPhase === 2) {
-      textColor = color(255, 69, 0, eduTechTextAlpha); // 橘紅色 (代表更高分數)
-    } else {
-      textColor = color(255, 255, 255, eduTechTextAlpha); // 預設白色 (以防萬一)
-    }
-
-    fill(textColor); // 設定文字顏色
+    fill(66, 133, 244, eduTechTextAlpha); // 設定文字顏色為教育科技藍色 (RGB: 66, 133, 244)，並應用當前透明度
     textSize(48); // 設定文字大小
     textAlign(CENTER, CENTER); // 文字水平和垂直居中對齊
-    // 在畫布中央偏上的位置加上擺動偏移量顯示文字
-    text('教育科技', width / 2 + eduTechTextOffsetX, height / 2 - 100);
+    text('教育科技', width / 2, height / 2 - 100); // 在畫布中央偏上的位置顯示文字
   }
 
   ---
