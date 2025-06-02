@@ -126,7 +126,7 @@ function draw() {
 
   ---
 
-  ### **教育科技文字顯示邏輯 (新增功能)**
+  ### **教育科技文字顯示邏輯**
 
   // 檢查是否達到 8 個水果並且文字尚未顯示
   if (caughtScore >= 8 && !showEduTechText) {
@@ -148,7 +148,7 @@ function draw() {
 
   // 如果 `showEduTechText` 為 true，則繪製「教育科技」文字
   if (showEduTechText) {
-    fill(66, 133, 244, eduTechTextAlpha); // 設定文字顏色為教育科技藍色 (RGB: 66, 133, 244)，並應用當前透明度
+    fill(66, 133, 244, eduTechTextAlpha); // 設定文字顏色為教育科技藍色，並應用當前透明度
     textSize(48); // 設定文字大小
     textAlign(CENTER, CENTER); // 文字水平和垂直居中對齊
     text('教育科技', width / 2, height / 2 - 100); // 在畫布中央偏上的位置顯示文字
